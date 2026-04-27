@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>speva – Spenden &amp; Vereinsverwaltung</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-900: #04342C;
+    --green-800: #085041;
+    --green-700: #0F6E56;
+    --green-500: #1D9E75;
+    --green-300: #5DCAA5;
+    --green-200: #9FE1CB;
+    --green-100: #D6F2EB;
+    --green-50:  #E1F5EE;
+    --amber-700: #412402;
+    --amber-500: #BA7517;
+    --amber-400: #E8A020;
+    --amber-100: #FAC775;
+    --amber-50:  #FAEEDA;
+    --gray-900: #1A2020;
+    --gray-700: #3d3d3a;
+    --gray-500: #5F5E5A;
+    --gray-300: #B4B2A9;
+    --gray-100: #E8E6DF;
+    --gray-50:  #F4F1EA;
+    --white: #FFFFFF;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--gray-50);
+    color: var(--gray-700);
+    line-height: 1.6;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--green-900);
+    padding: 80px 40px 96px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(29,158,117,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--green-300);
+    margin-bottom: 28px;
+  }
+  .hero-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 40px;
+  }
+  .hero-wordmark {
+    font-size: 64px;
+    font-weight: 300;
+    letter-spacing: -3px;
+    color: var(--green-50);
+    line-height: 1;
+  }
+  .hero-claim {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green-800);
+    margin-top: 6px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--white);
+    letter-spacing: -1.5px;
+    max-width: 700px;
+    margin: 0 auto 20px;
+    line-height: 1.25;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--green-300);
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--green-200);
+    opacity: 0.75;
+    max-width: 540px;
+    margin: 0 auto 48px;
+  }
+  .hero-cta-row {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    font-family: var(--font);
+    text-decoration: none;
+    transition: opacity .15s;
+  }
+  .btn:hover { opacity: .85; }
+  .btn-primary   { background: var(--green-500); color: var(--white); }
+  .btn-outline   { background: transparent; color: var(--green-300); border: 1px solid var(--green-800); }
+
+  /* ── Layout ── */
+  .section-wrap { max-width: 1000px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 80px 0; }
+  section + section { border-top: 1px solid var(--gray-100); }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green-500);
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-size: 30px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: var(--gray-900);
+    margin-bottom: 16px;
+  }
+  .section-body {
+    font-size: 15px;
+    color: var(--gray-500);
+    max-width: 560px;
+    line-height: 1.75;
+  }
+
+  /* ── Stat row ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .stat-label { font-size: 11px; color: var(--gray-300); margin-bottom: 6px; }
+  .stat-value { font-size: 36px; font-weight: 300; letter-spacing: -1.5px; color: var(--gray-900); line-height: 1; }
+  .stat-note  { font-size: 12px; color: var(--green-500); margin-top: 4px; }
+
+  /* ── Feature grid ── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .feature-card {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .feature-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    background: var(--green-50);
+  }
+  .feature-icon.amber { background: var(--amber-50); }
+  .feature-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--gray-900);
+    margin-bottom: 8px;
+  }
+  .feature-desc {
+    font-size: 14px;
+    color: var(--gray-500);
+    line-height: 1.7;
+  }
+  .feature-tag-row { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .tag-green { background: var(--green-50); color: var(--green-700); }
+  .tag-amber { background: var(--amber-50); color: var(--amber-700); }
+  .tag-gray  { background: var(--gray-100); color: var(--gray-500); }
+
+  /* ── How it works ── */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 48px;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: calc(12.5% + 8px);
+    right: calc(12.5% + 8px);
+    height: 1px;
+    background: var(--gray-100);
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 12px;
+  }
+  .step-num {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--green-900);
+    color: var(--green-300);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .step-title { font-size: 14px; font-weight: 500; color: var(--gray-900); margin-bottom: 6px; }
+  .step-desc  { font-size: 12px; color: var(--gray-500); line-height: 1.6; }
+
+  /* ── Audience cards ── */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .audience-card {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .audience-role {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--green-500);
+    margin-bottom: 8px;
+  }
+  .audience-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--gray-900);
+    margin-bottom: 12px;
+  }
+  .audience-list {
+    list-style: none;
+    font-size: 13px;
+    color: var(--gray-500);
+    line-height: 2;
+  }
+  .audience-list li::before {
+    content: '→ ';
+    color: var(--green-500);
+  }
+
+  /* ── Pricing ── */
+  .pricing-wrap {
+    background: var(--green-900);
+    border-radius: 16px;
+    padding: 56px 48px;
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .pricing-left .pricing-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green-300);
+    margin-bottom: 12px;
+  }
+  .pricing-headline {
+    font-size: 48px;
+    font-weight: 300;
+    letter-spacing: -2px;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .pricing-sub {
+    font-size: 14px;
+    color: var(--green-200);
+    opacity: 0.7;
+    margin-bottom: 28px;
+  }
+  .pricing-detail {
+    font-size: 13px;
+    color: var(--green-200);
+    opacity: 0.6;
+  }
+  .pricing-table {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .pt-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 13px;
+  }
+  .pt-row:last-child { border-bottom: none; }
+  .pt-row .vol { color: var(--green-200); opacity: 0.7; }
+  .pt-row .fee { font-family: var(--mono); color: var(--green-300); font-weight: 500; }
+  .pt-row.highlight { background: rgba(29,158,117,0.15); }
+  .pt-row.highlight .vol { color: var(--white); opacity: 1; }
+  .pt-row.highlight .fee { color: var(--amber-100); }
+
+  /* ── DSGVO badge ── */
+  .trust-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .trust-badge {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: 8px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--gray-700);
+  }
+
+  /* ── Final CTA ── */
+  .cta-band {
+    background: var(--green-700);
+    padding: 72px 40px;
+    text-align: center;
+  }
+  .cta-band .cta-heading {
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .cta-band .cta-sub {
+    font-size: 15px;
+    color: var(--green-100);
+    opacity: 0.8;
+    margin-bottom: 36px;
+  }
+  .cta-band .btn-white {
+    background: var(--white);
+    color: var(--green-700);
+    font-weight: 500;
+  }
+
+  /* ── Footer ── */
+  .page-footer {
+    background: var(--green-900);
+    padding: 40px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-left { display: flex; align-items: center; gap: 14px; }
+  .footer-wm   { font-size: 20px; font-weight: 300; color: var(--green-300); letter-spacing: -0.5px; }
+  .footer-meta { font-size: 11px; color: var(--green-800); }
+
+  /* ── Responsive ── */
+  @media (max-width: 760px) {
+    .hero { padding: 56px 24px 72px; }
+    .hero h1 { font-size: 28px; }
+    .section-wrap { padding: 0 24px; }
+    .stat-row { grid-template-columns: 1fr; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .steps::before { display: none; }
+    .audience-grid { grid-template-columns: 1fr; }
+    .pricing-wrap { grid-template-columns: 1fr; padding: 36px 28px; }
+    .page-footer { padding: 32px 24px; flex-direction: column; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<header class="hero">
+  <div class="hero-eyebrow">Jetzt in Entwicklung · Early Access 2026</div>
+
+  <div class="hero-logo">
+    <svg width="72" height="72" viewBox="0 0 52 52" fill="none">
+      <rect width="52" height="52" rx="13" fill="#1D9E75"/>
+      <line x1="16" y1="36" x2="36" y2="16" stroke="#0F3D2E" stroke-width="3.5" stroke-linecap="round"/>
+      <polyline points="22,14 38,14 38,30" fill="none" stroke="#0F3D2E" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="16" y1="40" x2="36" y2="40" stroke="#9FE1CB" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <div class="hero-wordmark">speva</div>
+      <div class="hero-claim">Spenden &amp; Vereinsverwaltung</div>
+    </div>
+  </div>
+
+  <h1>Buchhaltung und Spendenverwaltung,<br><em>die Vereine wirklich brauchen.</em></h1>
+  <p class="hero-sub">
+    Buchhaltung, Spendenverwaltung und CRM für gemeinnützige Vereine – als isolierte Instanz, managed oder on-premise.
+  </p>
+  <div class="hero-cta-row">
+    <a href="mailto:braini@sonnenkinder.org" class="btn btn-primary">Frühzugang anfragen</a>
+    <a href="#features" class="btn btn-outline">Funktionen entdecken</a>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════ ZAHLEN ═══════════════════════ -->
+<section style="background: var(--white);">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Warum speva</div>
+    <h2 class="section-heading">Weniger Aufwand. Mehr Transparenz.</h2>
+    <p class="section-body">Viele Vereine verbringen Stunden mit Excel-Tabellen und manuellem Kontoabgleich. speva übernimmt die Routine – damit Sie sich auf das Wesentliche konzentrieren können.</p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-label">Preismodell</div>
+        <div class="stat-value">1,5 %</div>
+        <div class="stat-note">des bestätigten Spendenvolumens</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Kosten-Deckel</div>
+        <div class="stat-value">500 €</div>
+        <div class="stat-note">maximal pro Monat – auch bei großen Volumina</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Kleinstvereine</div>
+        <div class="stat-value">0 €</div>
+        <div class="stat-note">unter 667 € Spendenvolumen / Monat</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ FEATURES ═══════════════════════ -->
+<section id="features">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Funktionsumfang</div>
+    <h2 class="section-heading">Alles, was ein Verein braucht.</h2>
+    <p class="section-body">Kein Flickenteppich aus verschiedenen Tools – speva bringt Buchhaltung, Spendenverwaltung, CRM und das Fundraiser-Portal in einer Plattform zusammen. Jeder Verein bekommt eine eigene, vollständig isolierte Instanz.</p>
+
+    <div class="feature-grid">
+
+      <!-- Buchhaltung -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+            <line x1="8" y1="8" x2="16" y2="8"/>
+            <line x1="8" y1="16" x2="12" y2="16"/>
+          </svg>
+        </div>
+        <div class="feature-title">Buchhaltung nach SKR 42</div>
+        <div class="feature-desc">
+          Einnahmen-Ausgaben-Rechnung (EÜR) als Standard – passend für die überwiegende Mehrheit der Vereine in Deutschland. Mit voreingestelltem SKR-42-Kontenplan, Splitbuchungen und Belegarchiv.
+        </div>
+        <div class="feature-tag-row">
+          <span class="tag tag-green">EÜR</span>
+          <span class="tag tag-green">SKR 42</span>
+          <span class="tag tag-green">Splitbuchungen</span>
+          <span class="tag tag-green">DATEV-Export</span>
+          <span class="tag tag-gray">Belege-Upload</span>
+        </div>
+      </div>
+
+      <!-- Spenden -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <div class="feature-title">Spenden- &amp; Projektverwaltung</div>
+        <div class="feature-desc">
+          Spenden werden Projekten zugeordnet – automatisch per Verwendungszweck oder manuell. Zuwendungsbestätigungen (D/A/CH) werden auf Knopfdruck als PDF erstellt und per E-Mail versendet.
+        </div>
+        <div class="feature-tag-row">
+          <span class="tag tag-green">Deutschland</span>
+          <span class="tag tag-green">Österreich</span>
+          <span class="tag tag-green">Schweiz</span>
+          <span class="tag tag-gray">Einzel- &amp; Sammelquittungen</span>
+        </div>
+      </div>
+
+      <!-- Bank -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+        </div>
+        <div class="feature-title">Bankanbindung &amp; Import</div>
+        <div class="feature-desc">
+          Direktverbindung zu deutschen Banken via FinTS/HBCI, MT940-Dateiimport und PayPal-Integration. Importierte Buchungen werden automatisch kategorisiert und auf Duplikate geprüft – vor der Übernahme ins Buchungssystem.
+        </div>
+        <div class="feature-tag-row">
+          <span class="tag tag-green">FinTS / HBCI</span>
+          <span class="tag tag-green">MT940</span>
+          <span class="tag tag-green">PayPal</span>
+          <span class="tag tag-gray">CSV-Import</span>
+        </div>
+      </div>
+
+      <!-- KI -->
+      <div class="feature-card">
+        <div class="feature-icon amber">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BA7517" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4l3 3"/>
+          </svg>
+        </div>
+        <div class="feature-title">KI-Buchungskategorisierung <span class="tag tag-amber" style="font-size:10px; vertical-align:middle; margin-left:4px;">optional</span></div>
+        <div class="feature-desc">
+          Ein selbst gehostetes Sprachmodell (Llama, Mistral o.ä.) analysiert Verwendungszwecke und schlägt die passende Projektzuordnung mit Konfidenzwert vor – vollständig lokal, kein Datentransfer an Dritte.
+        </div>
+        <div class="feature-tag-row">
+          <span class="tag tag-amber">Self-hosted LLM</span>
+          <span class="tag tag-amber">On-premises</span>
+          <span class="tag tag-gray">DSGVO-konform</span>
+        </div>
+      </div>
+
+      <!-- CRM -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="feature-title">Kontaktverwaltung (CRM)</div>
+        <div class="feature-desc">
+          Ein Kontakt kann gleichzeitig Mitglied, Spender und Fundraiser sein. Duplettenprüfung, Tags, Kommunikationshistorie und DSGVO-Einwilligungen sind direkt im Kontaktprofil verwaltet.
+        </div>
+        <div class="feature-tag-row">
+          <span class="tag tag-green">Mitglieder</span>
+          <span class="tag tag-green">Spender</span>
+          <span class="tag tag-green">Fundraiser</span>
+          <span class="tag tag-gray">CSV / Excel-Export</span>
+        </div>
+      </div>
+
+      <!-- Fundraiser -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="feature-title">Fundraiser-Portal</div>
+        <div class="feature-desc">
+          Missionare, Stipendiaten oder Projektleiter erhalten einen eigenen, eingeschränkten Zugang: Spendeneingang in Echtzeit, eigene Kontakte pflegen, Fortschritt zum Zielbudget verfolgen – alles DSGVO-konform.
+        </div>
+        <div class="feature-tag-row">
+          <span class="tag tag-green">Eigenes Login</span>
+          <span class="tag tag-green">2FA</span>
+          <span class="tag tag-gray">Einwilligungsbasierte Spendersicht</span>
+        </div>
+      </div>
+
+      <!-- Deployment -->
+      <div class="feature-card" style="grid-column: 1 / -1; background: var(--green-900); border-color: transparent;">
+        <div style="display: flex; align-items: flex-start; gap: 28px; flex-wrap: wrap;">
+          <div class="feature-icon" style="background: rgba(29,158,117,0.2); flex-shrink: 0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9FE1CB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <div style="flex: 1; min-width: 220px;">
+            <div class="feature-title" style="color: var(--green-50);">Isolierte Instanz pro Verein</div>
+            <div class="feature-desc" style="color: var(--green-200); opacity: 0.75;">
+              Jeder Verein bekommt einen eigenen Container mit eigener Datenbank – keine gemeinsame Infrastruktur, keine Mandanten-Bugs, maximale Datenisolation. Managed durch uns oder on-premise auf Ihrer eigenen Hardware.
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; min-width: 200px;">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--green-200);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Vollständige Datentrennung
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--green-200);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              On-Premise-Option mit gleichem Image
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--green-200);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Kündigung = Datenlöschung, keine Reste
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--green-200);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Backup pro Mandant, unabhängig wiederherstellbar
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ WIE ES FUNKTIONIERT ═══════════════════════ -->
+<section style="background: var(--white);">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Workflow</div>
+    <h2 class="section-heading">Von der Überweisung zur Quittung.</h2>
+    <p class="section-body">speva schließt die Lücke zwischen Bankeingang und fertiger Zuwendungsbestätigung – in vier Schritten.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Bank verbinden</div>
+        <div class="step-desc">FinTS-Direktanbindung oder MT940-/CSV-Import – Buchungen landen automatisch in speva.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Automatisch zuordnen</div>
+        <div class="step-desc">Regelbasierte oder KI-gestützte Kategorisierung ordnet jede Buchung dem richtigen Projekt zu.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Prüfen &amp; freigeben</div>
+        <div class="step-desc">Unsichere Zuordnungen werden zur manuellen Prüfung markiert – der Buchhalter hat das letzte Wort.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Quittung versenden</div>
+        <div class="step-desc">PDF-Zuwendungsbestätigung nach amtlichem Muster (D/A/CH) per E-Mail – vollständig protokolliert.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ ZIELGRUPPEN ═══════════════════════ -->
+<section>
+  <div class="section-wrap">
+    <div class="section-eyebrow">Für wen</div>
+    <h2 class="section-heading">Jede Rolle bekommt genau das, was sie braucht.</h2>
+    <p class="section-body">speva ist rollenbasiert – Vereinsadministratoren sehen alles, Fundraiser nur ihre Projekte, Buchhalter nur die Finanzen.</p>
+
+    <div class="audience-grid">
+      <div class="audience-card">
+        <div class="audience-role">Vollzugriff</div>
+        <div class="audience-name">Vereins&shy;admin</div>
+        <ul class="audience-list">
+          <li>Alle Buchungen &amp; Projekte</li>
+          <li>Alle Kontakte verwalten</li>
+          <li>Benutzer &amp; Rollen konfigurieren</li>
+          <li>DSGVO-Einstellungen</li>
+          <li>Bankanbindung einrichten</li>
+        </ul>
+      </div>
+      <div class="audience-card">
+        <div class="audience-role">Finanzzugang</div>
+        <div class="audience-name">Buchhalter / Kassierer</div>
+        <ul class="audience-list">
+          <li>Buchungen erfassen &amp; prüfen</li>
+          <li>Spendenquittungen erstellen</li>
+          <li>EÜR &amp; Auswertungen</li>
+          <li>DATEV-Export für Steuerberater</li>
+          <li>Alle Kontakte einsehen</li>
+        </ul>
+      </div>
+      <div class="audience-card">
+        <div class="audience-role">Eingeschränkter Zugang</div>
+        <div class="audience-name">Fundraiser</div>
+        <ul class="audience-list">
+          <li>Eigene Projekte verfolgen</li>
+          <li>Spendeneingang in Echtzeit</li>
+          <li>Eigene Kontakte pflegen</li>
+          <li>E-Mail bei neuen Spenden</li>
+          <li>Keine Buchhaltungsdaten</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ PREISE ═══════════════════════ -->
+<section style="background: var(--white);">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Preismodell</div>
+    <h2 class="section-heading">Kosten nur, wenn Spenden fließen.</h2>
+    <p class="section-body">Keine Monatsgebühr, kein Abo-Trap. speva kostet 1,5 % des bestätigten Spendenvolumens – mit einem Deckel, damit es für große Vereine fair bleibt. Im Managed-Betrieb übernehmen wir Betrieb, Updates und Backups; On-Premise-Instanzen können separat lizenziert werden.</p>
+
+    <div class="pricing-wrap">
+      <div class="pricing-left">
+        <div class="pricing-label">Preisformel</div>
+        <div class="pricing-headline">1,5 %</div>
+        <div class="pricing-sub">des bestätigten Spendenvolumens im Vormonat</div>
+        <div class="pricing-detail">
+          Mitgliedsbeiträge, interne Umbuchungen und Ausgaben zählen <em>nicht</em> zum Spendenvolumen.<br><br>
+          Kleinstvereine unter 667 € / Monat zahlen gar nichts.<br>
+          3 Monate kostenfreier Einstieg für Neumandanten (bis 500 € Gesamtvolumen).
+        </div>
+      </div>
+      <div class="pricing-right">
+        <div class="pricing-table">
+          <div class="pt-row">
+            <span class="vol">unter 667 € / Monat</span>
+            <span class="fee">0 €</span>
+          </div>
+          <div class="pt-row highlight">
+            <span class="vol">1.000 € / Monat</span>
+            <span class="fee">15 €</span>
+          </div>
+          <div class="pt-row highlight">
+            <span class="vol">5.000 € / Monat</span>
+            <span class="fee">75 €</span>
+          </div>
+          <div class="pt-row highlight">
+            <span class="vol">20.000 € / Monat</span>
+            <span class="fee">300 €</span>
+          </div>
+          <div class="pt-row">
+            <span class="vol">ab 33.000 € / Monat</span>
+            <span class="fee" style="color: var(--amber-100);">max. 500 €</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        DSGVO-konform (EU-Hosting)
+      </div>
+      <div class="trust-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Isolierte Instanz pro Verein
+      </div>
+      <div class="trust-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        TLS 1.3 · verschlüsselte Datenhaltung
+      </div>
+      <div class="trust-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Audit-Trail für alle Änderungen
+      </div>
+      <div class="trust-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        On-Premise-Option verfügbar
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ CTA ═══════════════════════ -->
+<div class="cta-band">
+  <div class="cta-heading">Bereit für einen Frühzugang?</div>
+  <p class="cta-sub">speva befindet sich in aktiver Entwicklung. Melden Sie sich jetzt an – Early-Access-Nutzer begleiten die Produktentwicklung und erhalten besondere Konditionen.</p>
+  <a href="mailto:braini@sonnenkinder.org" class="btn btn-white">Jetzt Kontakt aufnehmen</a>
+</div>
+
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="page-footer">
+  <div class="footer-left">
+    <svg width="32" height="32" viewBox="0 0 52 52" fill="none">
+      <rect width="52" height="52" rx="13" fill="#1D9E75"/>
+      <line x1="16" y1="36" x2="36" y2="16" stroke="#0F3D2E" stroke-width="3.5" stroke-linecap="round"/>
+      <polyline points="22,14 38,14 38,30" fill="none" stroke="#0F3D2E" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="16" y1="40" x2="36" y2="40" stroke="#9FE1CB" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <span class="footer-wm">speva</span>
+  </div>
+  <div class="footer-meta">Spenden &amp; Vereinsverwaltung · Early Access 2026 · Vertraulich</div>
+</footer>
+
+</body>
+</html>

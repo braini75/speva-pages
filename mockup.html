@@ -1,0 +1,285 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.app{display:grid;grid-template-columns:200px 1fr;min-height:700px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;background:var(--color-background-primary)}
+
+.sidebar{background:#0F3D2E;display:flex;flex-direction:column;padding:0}
+.sb-logo{display:flex;align-items:center;gap:10px;padding:20px 16px 16px;border-bottom:0.5px solid rgba(255,255,255,0.07)}
+.sb-wm{font-size:18px;font-weight:300;color:#9FE1CB;letter-spacing:-0.5px}
+.sb-nav{padding:12px 8px;flex:1}
+.sb-section{font-size:9px;font-weight:500;letter-spacing:1.8px;color:#5DCAA5;opacity:0.5;padding:14px 8px 6px;text-transform:uppercase}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;cursor:pointer;margin-bottom:2px}
+.sb-item.active{background:rgba(29,158,117,0.18)}
+.sb-item svg{width:15px;height:15px;flex-shrink:0}
+.sb-item span{font-size:13px;font-weight:400;color:#9FE1CB;opacity:0.7}
+.sb-item.active span{opacity:1;font-weight:500}
+.sb-item.active svg{opacity:1}
+.sb-item svg{opacity:0.5}
+.sb-item.active svg path,.sb-item.active svg line,.sb-item.active svg polyline,.sb-item.active svg rect,.sb-item.active svg circle{stroke:#9FE1CB}
+.sb-item svg path,.sb-item svg line,.sb-item svg polyline,.sb-item svg rect,.sb-item svg circle{stroke:#9FE1CB}
+.sb-badge{margin-left:auto;background:#E8A020;color:#412402;font-size:10px;font-weight:500;padding:1px 6px;border-radius:10px}
+.sb-user{padding:12px 14px;border-top:0.5px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:9px}
+.sb-avatar{width:28px;height:28px;border-radius:50%;background:#1D9E75;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#0F3D2E;flex-shrink:0}
+.sb-uname{font-size:12px;color:#9FE1CB;opacity:0.7}
+.sb-role{font-size:10px;color:#5DCAA5;opacity:0.5}
+
+.main{background:var(--color-background-tertiary);display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);padding:0 20px;height:52px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.topbar-title{font-size:15px;font-weight:500;color:var(--color-text-primary);flex:1}
+.topbar-sub{font-size:12px;color:var(--color-text-tertiary);margin-left:4px;font-weight:400}
+.tb-btn{padding:6px 14px;border-radius:var(--border-radius-md);font-size:12px;font-weight:500;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary)}
+.tb-btn.primary{background:#0F6E56;color:white;border-color:#0F6E56}
+
+.content{padding:16px;flex:1;display:flex;flex-direction:column;gap:14px}
+
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.metric{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:14px}
+.metric-label{font-size:11px;color:var(--color-text-tertiary);margin-bottom:6px}
+.metric-value{font-size:22px;font-weight:500;color:var(--color-text-primary);line-height:1}
+.metric-sub{font-size:11px;margin-top:4px}
+.metric-sub.up{color:#0F6E56}
+.metric-sub.warn{color:#BA7517}
+
+.two-col{display:grid;grid-template-columns:1fr 280px;gap:14px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden}
+.card-head{padding:12px 14px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between}
+.card-head-title{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.card-head-action{font-size:11px;color:#0F6E56;cursor:pointer}
+
+.tx-row{display:grid;grid-template-columns:28px 1fr 80px 72px;align-items:center;gap:10px;padding:9px 14px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.tx-row:last-child{border-bottom:none}
+.tx-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tx-icon.in{background:#E1F5EE}
+.tx-icon.pend{background:#FAEEDA}
+.tx-name{font-size:12px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.tx-proj{font-size:11px;color:var(--color-text-tertiary)}
+.tx-amount{font-size:13px;font-weight:500;text-align:right}
+.tx-amount.in{color:#0F6E56}
+.tx-amount.out{color:var(--color-text-secondary)}
+.badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:500}
+.badge.green{background:#E1F5EE;color:#085041}
+.badge.amber{background:#FAEEDA;color:#633806}
+.badge.gray{background:var(--color-background-secondary);color:var(--color-text-tertiary)}
+
+.proj-row{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.proj-row:last-child{border-bottom:none}
+.proj-top{display:flex;align-items:center;justify-content:space-between}
+.proj-name{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.proj-pct{font-size:11px;color:#0F6E56;font-weight:500}
+.proj-bar-bg{height:4px;background:var(--color-background-secondary);border-radius:2px;margin:5px 0 3px}
+.proj-bar{height:4px;border-radius:2px;background:#1D9E75}
+.proj-meta{font-size:10px;color:var(--color-text-tertiary)}
+</style>
+
+<h2 class="sr-only">speva Hauptoberfläche – Dashboard mit Buchungsübersicht, Metriken und Projektstatus</h2>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <svg width="26" height="26" viewBox="0 0 52 52" fill="none">
+        <rect width="52" height="52" rx="13" fill="#1D9E75"/>
+        <line x1="16" y1="36" x2="36" y2="16" stroke="#0F3D2E" stroke-width="4" stroke-linecap="round"/>
+        <polyline points="22,14 38,14 38,30" fill="none" stroke="#0F3D2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="16" y1="40" x2="36" y2="40" stroke="#9FE1CB" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="sb-wm">speva</span>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-section">Finanzen</div>
+      <div class="sb-item active">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke-width="1.2"/><rect x="9" y="2" width="5" height="5" rx="1" stroke-width="1.2"/><rect x="2" y="9" width="5" height="5" rx="1" stroke-width="1.2"/><rect x="9" y="9" width="5" height="5" rx="1" stroke-width="1.2"/></svg>
+        <span>Dashboard</span>
+      </div>
+      <div class="sb-item" onclick="sendPrompt('Zeige den Buchungsimport-Bereich von speva')">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3v10" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <span>Buchungen</span>
+        <span class="sb-badge">5</span>
+      </div>
+      <div class="sb-item" onclick="sendPrompt('Zeige den Bankimport-Bereich von speva')">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="5" width="12" height="8" rx="1" stroke-width="1.2"/><path d="M5 5V4a3 3 0 016 0v1" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <span>Bankimport</span>
+      </div>
+      <div class="sb-section">Verwaltung</div>
+      <div class="sb-item" onclick="sendPrompt('Zeige die Projektverwaltung von speva')">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M2 12V6l6-4 6 4v6" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="6" y="9" width="4" height="3" rx="0.5" stroke-width="1.2"/></svg>
+        <span>Projekte</span>
+      </div>
+      <div class="sb-item" onclick="sendPrompt('Zeige die Kontaktverwaltung von speva')">
+        <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke-width="1.2"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <span>Kontakte</span>
+      </div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h10" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <span>Berichte</span>
+      </div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke-width="1.2"/><path d="M8 2v1M8 13v1M2 8h1M13 8h1M3.5 3.5l.7.7M11.8 11.8l.7.7M3.5 12.5l.7-.7M11.8 4.2l.7-.7" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <span>Einstellungen</span>
+      </div>
+    </nav>
+
+    <div class="sb-user">
+      <div class="sb-avatar">MK</div>
+      <div>
+        <div class="sb-uname">Maria Koch</div>
+        <div class="sb-role">Administrator</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <span class="topbar-title">Dashboard <span class="topbar-sub">April 2026</span></span>
+      <button class="tb-btn" onclick="sendPrompt('Zeige den Bankimport-Workflow von speva')">Bankimport</button>
+      <button class="tb-btn primary">+ Buchung</button>
+    </div>
+
+    <div class="content">
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-label">Spenden diesen Monat</div>
+          <div class="metric-value">23.450 €</div>
+          <div class="metric-sub up">+12 % vs. Vormonat</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Offene Zuordnungen</div>
+          <div class="metric-value">5</div>
+          <div class="metric-sub warn">Prüfung nötig</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Aktive Projekte</div>
+          <div class="metric-value">7</div>
+          <div class="metric-sub up">3 im Zielbereich</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Plattformgebühr</div>
+          <div class="metric-value">351 €</div>
+          <div class="metric-sub up">1,5 % · Deckel frei</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-head-title">Letzte Buchungen</span>
+            <span class="card-head-action" onclick="sendPrompt('Zeige alle Buchungen in speva')">Alle anzeigen →</span>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon in">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M3 8l5-5 5 5" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="tx-name">Heinrich Brandt</div>
+              <div class="tx-proj">Schulbau Mali</div>
+            </div>
+            <div style="text-align:right">
+              <div class="tx-amount in">+500 €</div>
+              <div style="font-size:10px;color:var(--color-text-tertiary)">heute 09:14</div>
+            </div>
+            <div><span class="badge green">Verbucht</span></div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon pend">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="#BA7517" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="#BA7517" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <div class="tx-name">Überweisung DE84…3821</div>
+              <div class="tx-proj">Kein Projekt erkannt</div>
+            </div>
+            <div style="text-align:right">
+              <div class="tx-amount in">+250 €</div>
+              <div style="font-size:10px;color:var(--color-text-tertiary)">heute 08:52</div>
+            </div>
+            <div><span class="badge amber">Prüfung</span></div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon in">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M3 8l5-5 5 5" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="tx-name">PayPal · Sammelspende</div>
+              <div class="tx-proj">Wasserversorgung (Split)</div>
+            </div>
+            <div style="text-align:right">
+              <div class="tx-amount in">+1.200 €</div>
+              <div style="font-size:10px;color:var(--color-text-tertiary)">gestern</div>
+            </div>
+            <div><span class="badge green">Verbucht</span></div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon" style="background:var(--color-background-secondary)">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8l5 5 5-5" stroke="var(--color-text-tertiary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="tx-name">Miete Vereinsraum</div>
+              <div class="tx-proj">Verwaltungskosten</div>
+            </div>
+            <div style="text-align:right">
+              <div class="tx-amount out">−480 €</div>
+              <div style="font-size:10px;color:var(--color-text-tertiary)">gestern</div>
+            </div>
+            <div><span class="badge gray">Ausgabe</span></div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon pend">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="#BA7517" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="#BA7517" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <div class="tx-name">Erika Musterfrau</div>
+              <div class="tx-proj">KI: 73 % → Stipendium Yaw</div>
+            </div>
+            <div style="text-align:right">
+              <div class="tx-amount in">+100 €</div>
+              <div style="font-size:10px;color:var(--color-text-tertiary)">Di. 22. Apr</div>
+            </div>
+            <div><span class="badge amber">KI-Vorschlag</span></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card">
+            <div class="card-head">
+              <span class="card-head-title">Projekte</span>
+              <span class="card-head-action" onclick="sendPrompt('Zeige alle Projekte in speva')">Alle →</span>
+            </div>
+            <div class="proj-row">
+              <div class="proj-top"><span class="proj-name">Schulbau Mali</span><span class="proj-pct">68 %</span></div>
+              <div class="proj-bar-bg"><div class="proj-bar" style="width:68%"></div></div>
+              <div class="proj-meta">17.000 € / 25.000 € · Ziel</div>
+            </div>
+            <div class="proj-row">
+              <div class="proj-top"><span class="proj-name">Wasserversorgung</span><span class="proj-pct">91 %</span></div>
+              <div class="proj-bar-bg"><div class="proj-bar" style="width:91%;background:#E8A020"></div></div>
+              <div class="proj-meta">9.100 € / 10.000 € · fast erreicht</div>
+            </div>
+            <div class="proj-row">
+              <div class="proj-top"><span class="proj-name">Stipendium Yaw K.</span><span class="proj-pct">44 %</span></div>
+              <div class="proj-bar-bg"><div class="proj-bar" style="width:44%"></div></div>
+              <div class="proj-meta">5.280 € / 12.000 € · läuft</div>
+            </div>
+            <div class="proj-row">
+              <div class="proj-top"><span class="proj-name">Allg. Rücklage</span><span class="proj-pct">—</span></div>
+              <div class="proj-bar-bg"><div class="proj-bar" style="width:100%;background:var(--color-border-tertiary)"></div></div>
+              <div class="proj-meta">3.200 € · kein Zielbudget</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <span class="card-head-title">Plattformgebühr</span>
+            </div>
+            <div style="padding:12px 14px">
+              <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:3px">April 2026</div>
+              <div style="font-size:20px;font-weight:500;color:var(--color-text-primary)">351,75 €</div>
+              <div style="height:4px;background:var(--color-background-secondary);border-radius:2px;margin:10px 0 6px">
+                <div style="height:4px;border-radius:2px;background:#1D9E75;width:70%"></div>
+              </div>
+              <div style="font-size:10px;color:var(--color-text-tertiary)">23.450 € × 1,5 % · Deckel: 500 €</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
