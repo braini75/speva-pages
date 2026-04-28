@@ -461,19 +461,19 @@
 
     <div class="stat-row">
       <div class="stat-card">
-        <div class="stat-label">Preismodell</div>
-        <div class="stat-value">1,5 %</div>
-        <div class="stat-note">des bestätigten Spendenvolumens</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Kosten-Deckel</div>
-        <div class="stat-value">500 €</div>
-        <div class="stat-note">maximal pro Monat – auch bei großen Volumina</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Kleinstvereine</div>
+        <div class="stat-label">Einstieg</div>
         <div class="stat-value">0 €</div>
-        <div class="stat-note">unter 667 € Spendenvolumen / Monat</div>
+        <div class="stat-note">dauerhaft kostenlos bis 500 € Spendenvolumen / Monat</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Standardpreis</div>
+        <div class="stat-value">19 €</div>
+        <div class="stat-note">Basis-Stufe bis 10.000 € Spendenvolumen / Monat</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Größte Stufe</div>
+        <div class="stat-value">49 €</div>
+        <div class="stat-note">Werk – unbegrenztes Spendenvolumen</div>
       </div>
     </div>
   </div>
@@ -610,6 +610,48 @@
         </div>
       </div>
 
+      <!-- E-Rechnung -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <div class="feature-title">E-Rechnung (XRechnung / ZUGFeRD)</div>
+        <div class="feature-desc">
+          Eingehende E-Rechnungen werden automatisch verarbeitet – Daten extrahiert, Buchungsposition vorgeschlagen, Original GoBD-konform archiviert. Ausgehende Rechnungen werden im ZUGFeRD-Hybridformat oder als XRechnung erstellt und versandt.
+        </div>
+        <div class="feature-tag-row">
+          <span class="tag tag-green">XRechnung</span>
+          <span class="tag tag-green">ZUGFeRD</span>
+          <span class="tag tag-green">EN-16931-Validierung</span>
+          <span class="tag tag-gray">GoBD-konform</span>
+        </div>
+      </div>
+
+      <!-- Kassenprüfer -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
+        <div class="feature-title">Kassenprüfer-Zugang</div>
+        <div class="feature-desc">
+          Kassenprüfer erhalten einen gesetzlich korrekten Lesezugang: alle Buchungen, Belege und Auswertungen im Prüfzeitraum – mit Kommentar- und Markierungsfunktion. Prüfberichte werden als PDF exportiert und können digital signiert werden.
+        </div>
+        <div class="feature-tag-row">
+          <span class="tag tag-green">Lesezugang</span>
+          <span class="tag tag-green">Kommentarfunktion</span>
+          <span class="tag tag-green">Prüfbericht PDF</span>
+          <span class="tag tag-gray">Digitale Signierung</span>
+        </div>
+      </div>
+
       <!-- Deployment -->
       <div class="feature-card" style="grid-column: 1 / -1; background: var(--green-900); border-color: transparent;">
         <div style="display: flex; align-items: flex-start; gap: 28px; flex-wrap: wrap;">
@@ -689,9 +731,9 @@
   <div class="section-wrap">
     <div class="section-eyebrow">Für wen</div>
     <h2 class="section-heading">Jede Rolle bekommt genau das, was sie braucht.</h2>
-    <p class="section-body">speva ist rollenbasiert – Vereinsadministratoren sehen alles, Fundraiser nur ihre Projekte, Buchhalter nur die Finanzen.</p>
+    <p class="section-body">speva ist rollenbasiert – Vereinsadministratoren sehen alles, Fundraiser nur ihre Projekte, Buchhalter die Finanzen, Kassenprüfer haben Lesezugang mit Kommentarfunktion.</p>
 
-    <div class="audience-grid">
+    <div class="audience-grid" style="grid-template-columns: repeat(2, 1fr);">
       <div class="audience-card">
         <div class="audience-role">Vollzugriff</div>
         <div class="audience-name">Vereins&shy;admin</div>
@@ -711,7 +753,18 @@
           <li>Spendenquittungen erstellen</li>
           <li>EÜR &amp; Auswertungen</li>
           <li>DATEV-Export für Steuerberater</li>
-          <li>Alle Kontakte einsehen</li>
+          <li>E-Rechnungen empfangen &amp; erstellen</li>
+        </ul>
+      </div>
+      <div class="audience-card">
+        <div class="audience-role">Prüfzugang (Lesezugang)</div>
+        <div class="audience-name">Kassenprüfer</div>
+        <ul class="audience-list">
+          <li>Buchungen &amp; Belege einsehen</li>
+          <li>Buchungen kommentieren &amp; markieren</li>
+          <li>EÜR &amp; Spendenübersichten lesen</li>
+          <li>Prüfbericht erstellen &amp; signieren</li>
+          <li>Kein Schreibzugriff auf Buchungen</li>
         </ul>
       </div>
       <div class="audience-card">
@@ -734,41 +787,42 @@
 <section style="background: var(--white);">
   <div class="section-wrap">
     <div class="section-eyebrow">Preismodell</div>
-    <h2 class="section-heading">Kosten nur, wenn Spenden fließen.</h2>
-    <p class="section-body">Keine Monatsgebühr, kein Abo-Trap. speva kostet 1,5 % des bestätigten Spendenvolumens – mit einem Deckel, damit es für große Vereine fair bleibt. Im Managed-Betrieb übernehmen wir Betrieb, Updates und Backups; On-Premise-Instanzen können separat lizenziert werden.</p>
+    <h2 class="section-heading">Flatrate. Voller Funktionsumfang. Auf allen Stufen.</h2>
+    <p class="section-body">Kein Prozentmodell, kein Abo-Trap. speva berechnet eine monatliche Flatrate – gestaffelt nach Spendenvolumen, voller Funktionsumfang auf allen Stufen. Kleinstvereine starten dauerhaft kostenlos; große Werke zahlen maximal 49 €. Im Managed-Betrieb übernehmen wir Betrieb, Updates und Backups; On-Premise-Instanzen können separat lizenziert werden.</p>
 
     <div class="pricing-wrap">
       <div class="pricing-left">
-        <div class="pricing-label">Preisformel</div>
-        <div class="pricing-headline">1,5 %</div>
-        <div class="pricing-sub">des bestätigten Spendenvolumens im Vormonat</div>
+        <div class="pricing-label">Preismodell</div>
+        <div class="pricing-headline">Flatrate</div>
+        <div class="pricing-sub">gestaffelt nach Spendenvolumen – voller Funktionsumfang auf allen Stufen</div>
         <div class="pricing-detail">
           Mitgliedsbeiträge, interne Umbuchungen und Ausgaben zählen <em>nicht</em> zum Spendenvolumen.<br><br>
-          Kleinstvereine unter 667 € / Monat zahlen gar nichts.<br>
-          3 Monate kostenfreier Einstieg für Neumandanten (bis 500 € Gesamtvolumen).
+          Free-Stufe: dauerhaft kostenlos, kein Kreditkarteneintrag erforderlich.<br>
+          Stufenwechsel automatisch vorgeschlagen – manuell jederzeit möglich.<br>
+          Monatlich kündbar, keine Mindestlaufzeit.
         </div>
       </div>
       <div class="pricing-right">
         <div class="pricing-table">
           <div class="pt-row">
-            <span class="vol">unter 667 € / Monat</span>
+            <span class="vol">Free · bis 500 € / Monat</span>
             <span class="fee">0 €</span>
           </div>
-          <div class="pt-row highlight">
-            <span class="vol">1.000 € / Monat</span>
-            <span class="fee">15 €</span>
+          <div class="pt-row">
+            <span class="vol">Starter · bis 2.000 € / Monat</span>
+            <span class="fee">9 €</span>
           </div>
           <div class="pt-row highlight">
-            <span class="vol">5.000 € / Monat</span>
-            <span class="fee">75 €</span>
+            <span class="vol">Basis · bis 10.000 € / Monat</span>
+            <span class="fee">19 €</span>
           </div>
           <div class="pt-row highlight">
-            <span class="vol">20.000 € / Monat</span>
-            <span class="fee">300 €</span>
+            <span class="vol">Pro · bis 30.000 € / Monat</span>
+            <span class="fee">39 €</span>
           </div>
           <div class="pt-row">
-            <span class="vol">ab 33.000 € / Monat</span>
-            <span class="fee" style="color: var(--amber-100);">max. 500 €</span>
+            <span class="vol">Werk · unbegrenzt</span>
+            <span class="fee" style="color: var(--amber-100);">49 €</span>
           </div>
         </div>
       </div>
